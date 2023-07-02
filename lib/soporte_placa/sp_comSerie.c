@@ -1,4 +1,5 @@
 #include <soporte_placa/sp_comSerie.h>
+#include <soporte_placa/sp_pin.h>
 #include <stdbool.h>   // bool, true, false
 #include <stdint.h>    // uint32_t
 #include <stddef.h>    // size_t
@@ -26,8 +27,37 @@ void SP_ComSerie_init(void){
     SystemCoreClockUpdate(); /* Determina frecuencia de reloj y actualiza SystemCoreClock */
 
     /*Registro de tasa de baudios*/
-    USART1->BRR=(SystemCoreClock+1)/9600;
+    USART1->BRR=(SystemCoreClock)/9600;
 
     /*Registro de control 1*/
     USART1->CR1 |= USART_CR1_UE | USART_CR1_TE | USART_CR1_RE; // Máscara para habilitar: el usart, el transmisor y el receptor  
 }
+
+bool SP_ComSerie_hayDatoDisponible(void){
+    return USART1->SR & USART_SR_RXNE;
+}
+
+char SP_ComSerie_read(void){
+    const char buffer_Rx;
+    // Esperar que haya datos en RX
+    while( ! SP_ComSerie_hayDatoDisponible());
+    // hay dato disponible
+    buffer_Rx= USART1->DR;
+    return buffer_Rx;
+}
+
+bool SP_ComSerie_hayLugarEnElTransmisor(void){
+    return USART1->SR & USART_SR_TXE; //TXE=1 el dato se transfiere al registro TDR, TXE=0 el dato no se transfiere
+}
+
+
+void SP_ComSerie_write(char buffer_Tx){
+    // Esperar que haya lugar en TX
+    while (! SP_ComSerie_hayLugarEnElTransmisor);
+    // hay lugar
+    USART1->DR = buffer_Tx;
+}
+
+//void SP_ComSerie_procesa(void){
+//    
+//}

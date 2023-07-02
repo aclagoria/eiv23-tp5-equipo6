@@ -4,6 +4,7 @@
 #include <stdbool.h> //bool
 #include <stdlib.h>
 
+
 /**
  * @brief Inicialización del periferico USART 1
  * Configura pines: PA9-> USART1_TX ;  PA10->USART1_RX 
@@ -16,20 +17,23 @@
 void SP_ComSerie_init(void);
 
 /**
- * @brief lee lo que el UART transmite
+ * @brief lee lo que el UART recibe
  * 
- * @return char 
+ * @param leer 
  */
 char SP_ComSerie_read(void);
 
 /**
- * @brief escribe lo que el UART recibe
+ * @brief escribe lo que el UART transmite
  * 
- * @param caracter 
- * @return true 
- * @return false 
+ * @param escribir 
  */
-bool SP_ComSerie_write(char caracter);
+void SP_ComSerie_write(char buffer_Tx);
+
+bool SP_ComSerie_hayDatoDisponible(void);
+
+bool SP_ComSerie_hayLugarEnElTransmisor(void);
+
 
 //void SP_ComSerie_procesa(void);
 //void SP_ComSerie_set_errorHadler(void);
