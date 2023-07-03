@@ -3,6 +3,10 @@
 
 #include <stdbool.h> //bool
 #include <stdlib.h>
+#include <stdint.h>    // uint32_t
+#include <stddef.h>    // size_t
+#include <stm32f1xx.h> // __WFI
+
 
 
 /**
@@ -21,14 +25,14 @@ void SP_ComSerie_init(void);
  * 
  * @param leer 
  */
-char SP_ComSerie_read(void);
+void SP_ComSerie_read(uint8_t *buffer_Rx);
 
 /**
  * @brief escribe lo que el UART transmite
  * 
  * @param escribir 
  */
-void SP_ComSerie_write(char buffer_Tx);
+void SP_ComSerie_write(uint8_t buffer_Tx);
 
 bool SP_ComSerie_hayDatoDisponible(void);
 

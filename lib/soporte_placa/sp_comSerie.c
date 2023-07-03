@@ -37,13 +37,11 @@ bool SP_ComSerie_hayDatoDisponible(void){
     return USART1->SR & USART_SR_RXNE;
 }
 
-char SP_ComSerie_read(void){
-    const char buffer_Rx;
+void SP_ComSerie_read(uint8_t *buffer_Rx){
     // Esperar que haya datos en RX
     while( ! SP_ComSerie_hayDatoDisponible());
     // hay dato disponible
-    buffer_Rx= USART1->DR;
-    return buffer_Rx;
+    *buffer_Rx= USART1->DR;
 }
 
 bool SP_ComSerie_hayLugarEnElTransmisor(void){
@@ -51,7 +49,7 @@ bool SP_ComSerie_hayLugarEnElTransmisor(void){
 }
 
 
-void SP_ComSerie_write(char buffer_Tx){
+void SP_ComSerie_write(uint8_t buffer_Tx){
     // Esperar que haya lugar en TX
     while (! SP_ComSerie_hayLugarEnElTransmisor);
     // hay lugar
