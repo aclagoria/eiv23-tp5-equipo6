@@ -4,7 +4,8 @@
 #include <stdint.h>
 
 /**
- * @brief inicializa el TIM2
+ * @brief Inicializa el TIM2,
+ *  Enciende reloj del timer 2, configura pines GPIO 
  */
 
 void SP_Timer_init(void);
@@ -15,6 +16,7 @@ void SP_Timer_init(void);
 
 /**
  * @brief Configura el TIM2 como modulacion de ancho de pulso
+ * Configura preescaler, periodo, valor inicial del PWM
  */
 void SP_Timer_PWM(void);
 
