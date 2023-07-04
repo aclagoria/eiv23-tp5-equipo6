@@ -5,7 +5,7 @@
 
 /**
  * @brief Inicializa el TIM2,
- *  Enciende reloj del timer 2, configura pines GPIO 
+ *  Enciende reloj del timer 2, configura pin de GPIOA 
  */
 
 void SP_Timer_init(void);
