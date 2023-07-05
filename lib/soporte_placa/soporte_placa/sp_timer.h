@@ -10,9 +10,6 @@
 
 void SP_Timer_init(void);
 
-//void SP_Timer_procesa();
-//void SP_Timer_setCompare();
-//void SP_Timer_setCapture();
 
 /**
  * @brief Configura el TIM2 como modulacion de ancho de pulso
@@ -20,6 +17,22 @@ void SP_Timer_init(void);
  */
 void SP_Timer_PWM(void);
 
+/**
+ * @brief Configura el valor de carga del PWM
+ * 
+ * @param angulo Ángulo de posición del servo 
+ */
+void SP_Timer_setPWM(int angulo);
+
+/**
+ * @brief Obtiene la posición del servo
+ * 
+ * @return int Ángulo
+ */
+int SP_Timer_getPWM(void);
+
+//void SP_Timer_setCapture();
+//void SP_Timer_procesa();
 //void SP_Timer_setCaptureEvent();
 //void SP_Timer_setCompareEvent();
 
