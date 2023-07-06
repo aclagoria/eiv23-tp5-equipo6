@@ -8,14 +8,16 @@ int main(void){
     SP_Timer_init();
     SP_Timer_PWM();
     for (;;)
-    {
+    {static int a=0;
+    a++;
+    if (a==180)a=0;
         // recibir y transmitir lo recibido
-        //SP_ComSerie_write(buffer);
+        SP_ComSerie_write('X');
         //SP_ComSerie_read(&buffer);
-        //for(int j=0;j<60000;++j){ //Retardo por fuerza bruta
-        //    for(int volatile i=0;i<(8000000/(1000*13));++i); //Calibro para que sea de 1 milisegundo, Calificar como volatile para que el compilador no lo elimine
-        //}
-        SP_Timer_setPWM(ang1);
+        for(int j=0;j<100;++j){ //Retardo por fuerza bruta
+            for(int volatile i=0;i<(8000000/(1000*13));++i); //Calibro para que sea de 1 milisegundo, Calificar como volatile para que el compilador no lo elimine
+        }
+        SP_Timer_setPWM(a);
         
     }
     return 0;
