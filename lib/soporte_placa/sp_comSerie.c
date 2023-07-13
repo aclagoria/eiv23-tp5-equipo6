@@ -56,6 +56,14 @@ void SP_ComSerie_write(uint8_t buffer_Tx){
     USART1->DR = buffer_Tx;
 }
 
+void SP_ComSerie_write_mensaje(char *mensaje){
+    int i = 0;
+    while (mensaje[i]!='\0'){
+        SP_ComSerie_write(mensaje[i]);
+        i++;
+    }
+}
+
 //void SP_ComSerie_procesa(void){
 //    
 //}

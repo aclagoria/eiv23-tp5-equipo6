@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <stdint.h>    // uint32_t
 #include <stddef.h>    // size_t
-#include <stm32f1xx.h> // __WFI
+#include <stm32f1xx.h> //
 
 
 
@@ -38,6 +38,7 @@ bool SP_ComSerie_hayDatoDisponible(void);
 
 bool SP_ComSerie_hayLugarEnElTransmisor(void);
 
+void SP_ComSerie_write_mensaje(char *mensaje);
 
 //void SP_ComSerie_procesa(void);
 //void SP_ComSerie_set_errorHadler(void);

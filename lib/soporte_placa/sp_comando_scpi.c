@@ -16,8 +16,8 @@ typedef struct comando{
 estado est_cmd;
 unsigned coincidente;
 int una_vez;
-int potencia;
-char num[3];
+int indice;
+char num[4];
 }comando;
 
 static comando cmd;
@@ -57,14 +57,14 @@ static bool coincide_establecer(char c){
             cmd.una_vez++;
             return true;
         }
-        else{return false}
+        else{return false;}
     }
     else{
         if(isdigit(c)){
-            if(cmd.potencia != 3){
-                int j=cmd.potencia;
+            if(cmd.indice != 3){
+                int j=cmd.indice;
                 cmd.num[j]=c;
-                cmd.potencia++;
+                cmd.indice++;
                 return true;
             }else{return false;}
         }
@@ -77,16 +77,26 @@ static bool coincide_establecer(char c){
     }
 }
 
+static int numeroDelComando(comando comando){ 
+    int num=0;
+    char n = comando.num;
+    
+    num=atoi(n);
+    return num; 
+}
+
 void SP_Comando_SCPI_init(void){
     cmd.est_cmd= INICIO;
     cmd.coincidente=0;
     cmd.una_vez=0;
-    cmd.potencia=0;
-    cmd.num="000";
+    cmd.indice=0;
+    for (int i = 1; i < 4 ; i++){
+     cmd.num[i]='0';
+    }
 }
 
 void SP_Comando_SCPI_procesa(char caracter){
-    switch (est_cmd)
+        switch (cmd.est_cmd)
     {
         case INICIO: /*  */
             if(caracter==('\n'||'\r'||'\0')){
@@ -107,14 +117,18 @@ void SP_Comando_SCPI_procesa(char caracter){
                 cmd.est_cmd=ESTABLECER;
                 }
                 else{
-                    cmd.est_cmd=INVALIDO
+                    cmd.est_cmd=INVALIDO;
                 }
             }    
         break; case PREGUNTAR:
             if(coincide_preguntar(caracter)){
                 if(caracter=='\n'){
                     /*funcion preguntar (get)*/
+                    //printf("preguntar");
+                    int ang=SP_Timer_getPWM();
+                    SP_ComSerie_write_mensaje("Preguntar");
                     cmd.est_cmd= INICIO;
+                    SP_Comando_SCPI_init();
                 }
             }
             else{
@@ -123,15 +137,20 @@ void SP_Comando_SCPI_procesa(char caracter){
         break; case ESTABLECER:
             if(coincide_establecer(caracter)){
                 if(caracter=='\n'){
-                    /*convertir cadena en número*/
-                    /*numero entre 0 y 180 */
-                    if((num>=0)&&(num<=180)){
+                    if((numeroDelComando(cmd)>=0)&&(numeroDelComando(cmd)<=180)){/*numero entre 0 y 180 */
                         /*establecer*/
                         /*mandar a inicio*/
-                    }else{if(num>180){
+                        int ang=numeroDelComando(cmd);
+                        SP_Timer_setPWM(ang);
+                        SP_ComSerie_write_mensaje("Establecer");
+                        SP_Comando_SCPI_init();
+                    }else{if(numeroDelComando(cmd)>180){
                         /*mandar a inicio*/
-                        /*msj de angulo superior*/}
-                        else{cmd.est_cmd=INVALIDO}}
+                        /*msj de angulo superior*/
+                        SP_ComSerie_write_mensaje("ANGULO SUPERIOR");
+                        SP_Comando_SCPI_init();
+                        }
+                        else{cmd.est_cmd=INVALIDO;}}
                 }
                 else {
                     if (isdigit(caracter)){
@@ -146,7 +165,9 @@ void SP_Comando_SCPI_procesa(char caracter){
         break; case INVALIDO:
             if(caracter=='\n'){
                 /*MANDAR MSJ DE INVALIDO*/
+                SP_ComSerie_write_mensaje("INVALIDO");
                 cmd.est_cmd=INICIO;
+                SP_Comando_SCPI_init();
             }      
         break;default:
             cmd.est_cmd= INVALIDO;       

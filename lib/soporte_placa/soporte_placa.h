@@ -5,6 +5,9 @@
 
 #include <soporte_placa/sp_pin.h>
 #include <soporte_placa/sp_tiempo.h>
+#include<soporte_placa/sp_comSerie.h>
+#include<soporte_placa/sp_timer.h>
+#include <soporte_placa/sp_comando_scpi.h>
 
 // Declaraciones
 
