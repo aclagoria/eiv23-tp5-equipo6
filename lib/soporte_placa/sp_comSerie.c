@@ -3,7 +3,7 @@
 #include <stdbool.h>   // bool, true, false
 #include <stdint.h>    // uint32_t
 #include <stddef.h>    // size_t
-#include <stm32f1xx.h> // __WFI
+#include <stm32f1xx.h> // 
 
 void SP_ComSerie_init(void){
     /* Habilitar reloj de GPIOA y USART1*/
