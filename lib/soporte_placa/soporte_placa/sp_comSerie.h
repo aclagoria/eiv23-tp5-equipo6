@@ -40,6 +40,8 @@ bool SP_ComSerie_hayLugarEnElTransmisor(void);
 
 void SP_ComSerie_write_mensaje(char *mensaje);
 
+void SP_ComSerie_write_numero(uint32_t num);
+
 //void SP_ComSerie_procesa(void);
 //void SP_ComSerie_set_errorHadler(void);
 //void SP_ComSerie_getError(void);

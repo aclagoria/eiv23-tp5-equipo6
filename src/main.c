@@ -6,7 +6,7 @@ int main(void){
     SP_ComSerie_init();
     SP_Timer_init();
     SP_Timer_PWM();
-    SP_Timer_setPWM(90);
+    //SP_Timer_setPWM(90);
     SP_Comando_SCPI_init();
     for (;;)
     {

@@ -51,7 +51,7 @@ bool SP_ComSerie_hayLugarEnElTransmisor(void){
 
 void SP_ComSerie_write(uint8_t buffer_Tx){
     // Esperar que haya lugar en TX
-    while (! SP_ComSerie_hayLugarEnElTransmisor);
+    while (! SP_ComSerie_hayLugarEnElTransmisor());
     // hay lugar
     USART1->DR = buffer_Tx;
 }
@@ -64,6 +64,24 @@ void SP_ComSerie_write_mensaje(char *mensaje){
     }
 }
 
+void SP_ComSerie_write_numero(uint32_t num){
+    char buff[20];
+    char*p = buff;
+
+    if(num==0){
+        SP_ComSerie_write('0');
+    }
+    while (num>0)
+    {
+        *p++ = '0' + (num % 10);
+        num/= 10;
+    }
+    while (--p >= buff)
+    {
+        SP_ComSerie_write(*p);
+    }
+    
+}
 //void SP_ComSerie_procesa(void){
 //    
 //}
