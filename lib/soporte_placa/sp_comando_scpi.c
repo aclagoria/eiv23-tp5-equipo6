@@ -105,9 +105,10 @@ void SP_Comando_SCPI_procesa(char caracter){
                 /*funcion preguntar (get)*/
                 //printf("preguntar");
                 int ang=SP_Timer_getPWM();
-                
-                SP_ComSerie_write_mensaje("Preguntar ");
+                SP_ComSerie_write_mensaje("El ángulo del servomotor está en: ");
                 SP_ComSerie_write_numero(ang);
+                SP_ComSerie_write_mensaje(" grados.");
+                SP_ComSerie_write('\n');
                 cmd.est_cmd= INICIO;
                 SP_Comando_SCPI_init();
             }else{
@@ -128,8 +129,9 @@ void SP_Comando_SCPI_procesa(char caracter){
                         /*mandar a inicio*/
                         
                         SP_Timer_setPWM(ang);
-                        SP_ComSerie_write_mensaje("Establecido ");
+                        SP_ComSerie_write_mensaje("Se estableció el ángulo del servomotor en: ");
                         SP_ComSerie_write_numero(ang);
+                        SP_ComSerie_write_mensaje(" grados.");
                         SP_ComSerie_write('\n');
                         SP_Comando_SCPI_init();
                         }else{
@@ -137,7 +139,8 @@ void SP_Comando_SCPI_procesa(char caracter){
                             /*mandar a inicio*/
                             /*msj de angulo superior*/
                             //SP_ComSerie_write_mensaje("ANGULO SUPERIOR");
-                            SP_ComSerie_write('S');
+                            SP_ComSerie_write_mensaje("ERROR: Ángulo inválido. El valor debe ser entre 0 y 180 grados.");
+                            SP_ComSerie_write('\n');
                             SP_Comando_SCPI_init();
                             }else{
                             cmd.est_cmd=INVALIDO;
@@ -151,7 +154,7 @@ void SP_Comando_SCPI_procesa(char caracter){
         break; case INVALIDO:
             if(caracter=='\n'){
                 /*MANDAR MSJ DE INVALIDO*/
-                SP_ComSerie_write_mensaje("INVALIDO");
+                SP_ComSerie_write_mensaje("ERROR: Comando inválido.");
                 cmd.est_cmd=INICIO;
                 SP_Comando_SCPI_init();
                 SP_ComSerie_write('\n');
