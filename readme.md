@@ -17,6 +17,6 @@ Se debió configurar en el microcontrolador los periféricos :
 ## Descripción de funcionalidad
 El controlador responde a los comandos:
 - **ANG?** : Para preguntar la posición del ángulo del servomotor. Muestra por pantalla el ángulo en grados.
-- **ANG <num>** : Donde <num> debe ser un numero entero entre 0 y 180, para establecer la posición del ángulo del servomotor. Muestra por pantalla el ángulo establecido en grados. Si se ingresa un numero mayor a 180 muestra un mensaje de error de ángulo.
+- **ANG (num)** : Donde (num) debe ser un numero entero entre 0 y 180, para establecer la posición del ángulo del servomotor. Muestra por pantalla el ángulo establecido en grados. Si se ingresa un numero mayor a 180 muestra un mensaje de error de ángulo.
   
 Cualquier combinación de caracteres que se ingrese, distinta a las ya mencionadas, muestra en pantalla un mensaje de error de comando.
